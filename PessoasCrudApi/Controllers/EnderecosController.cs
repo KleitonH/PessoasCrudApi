@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PessoasCrudApi.Data;
 using PessoasCrudApi.Models.Dtos;
 using PessoasCrudApi.Models.Entities;
@@ -19,14 +20,27 @@ namespace PessoasCrudApi.Controllers
         [HttpGet]
         public IActionResult ListarEnderecos()
         {
-            var enderecos = dbContext.Enderecos.ToList();
-            return Ok(enderecos);
+            var listaEnderecos = dbContext.Enderecos
+         .Select(e => new EnderecoResponseDto
+         {
+             Id = e.Id,
+             PessoaId = e.PessoaId,
+             Logradouro = e.Logradouro,
+             Cidade = e.Cidade,
+             Estado = e.Estado,
+             CEP = e.CEP
+         })
+         .ToList();
+
+            return Ok(listaEnderecos);
         }
 
         [HttpGet("{id:guid}")]
         public IActionResult ListarEnderecoPorId(Guid id)
         {
-            var endereco = dbContext.Enderecos.Find(id);
+            var endereco = dbContext.Enderecos
+                                    .Include(e => e.Pessoa) // Inclue a propriedade Pessoa. 
+                                    .FirstOrDefault(e => e.Id == id); // Em vez de Find(), FirstOrDefault pode encontrar o primeiro elemento com o id declarado; caso contrário, a resposta será nula.
             if (endereco == null)
             {
                 return NotFound();
