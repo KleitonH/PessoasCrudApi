@@ -6,7 +6,7 @@ using PessoasCrudApi.Models.Entities;
 
 namespace PessoasCrudApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("enderecos")]
     [ApiController]
     public class EnderecosController : ControllerBase
     {
@@ -39,14 +39,27 @@ namespace PessoasCrudApi.Controllers
         public IActionResult ListarEnderecoPorId(Guid id)
         {
             var endereco = dbContext.Enderecos
-                                    .Include(e => e.Pessoa) // Inclue a propriedade Pessoa. 
-                                    .FirstOrDefault(e => e.Id == id); // Em vez de Find(), FirstOrDefault pode encontrar o primeiro elemento com o id declarado; caso contrário, a resposta será nula.
+                                    .Include(e => e.Pessoa)
+                                    .FirstOrDefault(e => e.Id == id);
+
             if (endereco == null)
             {
                 return NotFound();
             }
-            return Ok(endereco);
+
+            var enderecoDto = new EnderecoResponseDto
+            {
+                Id = endereco.Id,
+                Logradouro = endereco.Logradouro,
+                Cidade = endereco.Cidade,
+                Estado = endereco.Estado,
+                CEP = endereco.CEP,
+                PessoaId = endereco.PessoaId
+            };
+
+            return Ok(enderecoDto);
         }
+
 
         [HttpPost]
         public IActionResult AdicionarEndereco([FromBody] AdicionarEnderecoDto enderecoDto)
@@ -71,8 +84,19 @@ namespace PessoasCrudApi.Controllers
             dbContext.Enderecos.Add(novoEndereco);
             dbContext.SaveChanges();
 
-            return CreatedAtAction(nameof(ListarEnderecoPorId), new { id = novoEndereco.Id }, novoEndereco);
+            var enderecoResponse = new EnderecoResponseDto
+            {
+                Id = novoEndereco.Id,
+                PessoaId = novoEndereco.PessoaId,
+                Logradouro = novoEndereco.Logradouro,
+                Cidade = novoEndereco.Cidade,
+                Estado = novoEndereco.Estado,
+                CEP = novoEndereco.CEP
+            };
+
+            return CreatedAtAction(nameof(ListarEnderecoPorId), new { id = novoEndereco.Id }, enderecoResponse);
         }
+
 
 
         [HttpPut("{id:guid}")]
@@ -99,8 +123,19 @@ namespace PessoasCrudApi.Controllers
 
             dbContext.SaveChanges();
 
-            return Ok(endereco);
+            var enderecoResponse = new EnderecoResponseDto
+            {
+                Id = endereco.Id,
+                PessoaId = endereco.PessoaId,
+                Logradouro = endereco.Logradouro,
+                Cidade = endereco.Cidade,
+                Estado = endereco.Estado,
+                CEP = endereco.CEP
+            };
+
+            return Ok(enderecoResponse);
         }
+
 
 
         [HttpDelete("{id:guid}")]

@@ -9,6 +9,6 @@
         public required string Estado { get; set; }
         public required string CEP { get; set; }
 
-        public required Pessoa Pessoa { get; set; }
+        public required Pessoa Pessoa { get; set; } = null!;
     }
 }
