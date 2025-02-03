@@ -1,1 +1,23 @@
+# Environment files
 .env
+
+# Build folders
+bin/
+obj/
+
+# User settings
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs and cache
+logs/
+*.log
+*.cache
+*.swp
+
+# Sensitive environment settings
+appsettings.Development.json
+appsettings.Local.json

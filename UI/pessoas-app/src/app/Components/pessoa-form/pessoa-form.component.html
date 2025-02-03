@@ -1,0 +1,57 @@
+<div class="modal" id="myModal" #minhaModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        @if (pessoaForm.value.id == null) {
+          <h4 class="modal-title">Adicionar Pessoa</h4>
+        }@else {
+          <h4 class="modal-title">Alterar Pessoa</h4>
+        }
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="fecharModal()"></button>
+      </div>
+      <form [formGroup]="pessoaForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-9">
+              <input type="text" formControlName="nome" class="form-control" placeholder="Nome">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <input type="text" formControlName="email" class="form-control" placeholder="Email">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <input type="date" formControlName="dataNascimento" class="form-control">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <app-endereco-form (enderecoAdicionado)="adicionarEndereco($event)"></app-endereco-form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let endereco of enderecos">
+                  {{ endereco.logradouro }} - {{ endereco.cidade }} / {{ endereco.estado }} CEP: {{ endereco.cep }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          @if (pessoaForm.value.id == null) {
+            <button type="submit" [disabled]="this.pessoaForm.invalid" class="btn btn-primary">Salvar</button>
+          }@else {
+            <button type="submit" [disabled]="this.pessoaForm.invalid" class="btn btn-success">Atualizar</button>
+          }
+
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="fecharModal()">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

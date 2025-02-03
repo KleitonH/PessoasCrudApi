@@ -1,0 +1,37 @@
+<div class="modal" id="enderecoModal" #enderecoModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h4 class="modal-title">Editar Endereço</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="fecharModal()"></button>
+      </div>
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <input type="text" formControlName="logradouro" class="form-control" placeholder="Logradouro">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <input type="text" formControlName="cidade" class="form-control" placeholder="Cidade">
+            </div>
+            <div class="col-6">
+              <input type="text" formControlName="estado" class="form-control" placeholder="Estado">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <input type="text" formControlName="cep" class="form-control" placeholder="CEP">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" [disabled]="formulario
+          .invalid" class="btn btn-success">Salvar</button>
+          <button type="button" class="btn btn-danger" (click)="fecharModal()">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

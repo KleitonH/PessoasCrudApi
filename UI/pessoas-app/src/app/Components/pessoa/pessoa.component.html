@@ -1,0 +1,50 @@
+
+<app-pessoa-form (pessoaAdicionada)="atualizarTabela()"></app-pessoa-form>
+<app-endereco-edit-form (enderecoAdicionado)="atualizarTabela()"></app-endereco-edit-form>
+<app-endereco-edit-form (enderecoAtualizado)="atualizarTabela()"></app-endereco-edit-form>
+
+<div class="container-fluid">
+    <div class="row p-2">
+        <span class="col-6">
+            <h3>Lista de Pessoas</h3>
+        </span>
+        <span class="col-6 text-end">
+            <button class="btn btn-warning" (click)="abrirModal()">Adicionar Pessoa</button>
+        </span>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data de Nascimento</th>
+                <th>Endereços</th>
+                <th class="text-center">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pessoasList">
+                <td>{{ item.nome }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.dataNascimento | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <ul>
+                      <li *ngFor="let endereco of item.enderecos" class="d-flex justify-content-left align-items-center gp-3">
+                          <span>
+                              {{ endereco.logradouro }} - {{ endereco.cidade }} / {{ endereco.estado }} - CEP: {{ endereco.cep }}
+                          </span>
+                          <button class="btn btn-primary btn-sm ms-2" (click)="AtualizarEndereco(endereco, item)">Editar</button>
+                          <button class="btn btn-danger btn-sm ms-3" (click)="excluirEndereco(endereco.id)">Excluir</button>
+                      </li>
+                  </ul>
+              </td>
+
+                <td class="text-center">
+                    <button class="btn btn-primary" (click)="atualizarPessoa(item)">Editar</button>
+                    <button class="ms-2 btn btn-danger" (click)="excluirPessoa(item.id)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

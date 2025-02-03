@@ -1,0 +1,18 @@
+<div class="card p-3">
+  <form [formGroup]="enderecoForm">
+    <input type="text" formControlName="logradouro" class="form-control mb-2" placeholder="Logradouro">
+    <input type="text" formControlName="cidade" class="form-control mb-2" placeholder="Cidade">
+    <input type="text" formControlName="estado" class="form-control mb-2" placeholder="Estado">
+    <input type="text" formControlName="cep" class="form-control mb-2" placeholder="CEP">
+    <button type="button" class="btn btn-primary" (click)="adicionarEndereco()">Adicionar Endereço</button>
+  </form>
+
+  <div class="mt-3 overflow-auto" style="max-height: 200px;">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let endereco of enderecos">
+        {{ endereco.logradouro }} - {{ endereco.cidade }} / {{ endereco.estado }} CEP: {{ endereco.cep }}
+        <button class="btn btn-danger btn-sm ms-2" (click)="removerEndereco(endereco)">Remover</button>
+    </li>
+    </ul>
+  </div>
+</div>

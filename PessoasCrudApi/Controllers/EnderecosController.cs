@@ -139,7 +139,7 @@ namespace PessoasCrudApi.Controllers
 
 
         [HttpDelete("{id:guid}")]
-        public IActionResult ApagarEndereco(Guid id)
+        public IActionResult ExcluirEndereco(Guid id)
         {
             var endereco = dbContext.Enderecos.Find(id);
             if (endereco == null)

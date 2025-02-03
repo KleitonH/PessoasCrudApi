@@ -94,7 +94,7 @@ namespace PessoasCrudApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdatePessoa(Guid id, [FromBody] AtualizarPessoaDto atualizarPessoaDto)
+        public IActionResult AtualizarPessoa(Guid id, [FromBody] AtualizarPessoaDto atualizarPessoaDto)
         {
             if (atualizarPessoaDto == null)
             {
@@ -120,7 +120,7 @@ namespace PessoasCrudApi.Controllers
 
         // Método para excluir uma pessoa
         [HttpDelete("{id}")]
-        public IActionResult DeletePessoa(Guid id)
+        public IActionResult ExcluirPessoa(Guid id)
         {
             var pessoa = dbContext.Pessoas.FirstOrDefault(p => p.Id == id);
             if (pessoa == null)
